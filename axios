@@ -1,0 +1,17 @@
+
+const axios = require("axios");
+
+const options = {
+  method: 'GET',
+  url: 'https://open-weather13.p.rapidapi.com/city/landon',
+  headers: {
+    'X-RapidAPI-Key': 'f0dfe99216mshf97a4619dc1e299p128480jsn025f6596c70c',
+    'X-RapidAPI-Host': 'open-weather13.p.rapidapi.com'
+  }
+};
+
+axios.request(options).then(function (response) {
+	console.log(response.data);
+}).catch(function (error) {
+	console.error(error);
+});
