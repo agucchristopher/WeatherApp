@@ -1,24 +1,22 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { countries } from "../data";
+import { Header, WeatherCard, WeatherDetails } from '../components';
+// import dotenv from 'dotenv'
 
 const Home = () => {
-const [allcountries, setcountries] = React.useState(countries)
+const [allcountries, setcountries] = React.useState(countries);
+React.useEffect(() => {
+  console.log(process.env.X_RapidAPI_Host)
+}, [])
+
     return (
-    <View style={{ flex: 1}}>
-        <Text>Countries</Text>
-      <FlatList 
-      data={allcountries} 
-      keyExtractor={(item, index) => index} 
-      showsVerticalScrollIndicator={false}
-      onEndReached={()=> console.log('end')}
-      renderItem={({item})=> (
-        <View style={{flex: 1, margin: 8, elevation: 15, backgroundColor:'dodgerblue', height: 120}}>
-            <Text style={{ fontSize: 25, margin: 5 }}>Country: {item.country}</Text>
-            <Text style={{ fontSize: 25, margin: 5 }}>City: {item.city}</Text>
-        </View>
-  )}/>
-    </View>
+    <ScrollView style={{ flex: 1, marginBottom: 0}}>
+      <StatusBar backgroundColor={'white'}  barStyle='dark-content' />
+       <Header />
+       <WeatherCard />
+       <WeatherDetails />
+    </ScrollView>
   )
 }
 
