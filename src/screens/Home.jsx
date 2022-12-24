@@ -1,25 +1,63 @@
-import { FlatList, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import {
+  FlatList,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+  PermissionsAndroid,
+  TouchableOpacity,
+  Dimensions,
+  SafeAreaView,
+} from "react-native";
+import React, { useState, useEffect } from "react";
 import { countries } from "../data";
-import { Header, WeatherCard, WeatherDetails } from '../components';
+import { Header, WeatherCard, WeatherDetails } from "../components";
+import { FontAwesome5 } from "@expo/vector-icons";
 // import dotenv from 'dotenv'
 
 const Home = () => {
-const [allcountries, setcountries] = React.useState(countries);
-React.useEffect(() => {
-  console.log(process.env.X_RapidAPI_Host)
-}, [])
+  const permissions = [
+    PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+    PermissionsAndroid.PERMISSIONS.CAMERA,
+    // PermissionsAndroid.PERMISSIONS.COARSE_LOCATION
+  ];
+  const [permissionGranted, setPermissionGranted] = useState(false);
 
-    return (
-    <ScrollView style={{ flex: 1, marginBottom: 0}}>
-      <StatusBar backgroundColor={'white'}  barStyle='dark-content' />
-       <Header />
-       <WeatherCard />
-       <WeatherDetails />
-    </ScrollView>
-  )
-}
+  useEffect(() => {
+    const getPermissions = async () => {
+      const granted = await PermissionsAndroid.requestMultiple(permissions);
+      const recordAudioGranted =
+        granted[PermissionsAndroid.PERMISSIONS.RECORD_AUDIO] === "granted";
+      const cameraGranted =
+        granted[PermissionsAndroid.PERMISSIONS.CAMERA] === "granted";
+      // const locationGranted =
+      // granted[PermissionsAndroid.PERMISSIONS.COARSE_LOCATION] === 'granted';
+      if (!cameraGranted || !recordAudioGranted) {
+        Alert.alert("Permissions not granted");
+      } else {
+        setPermissionGranted(true);
+      }
+    };
 
-export default Home
+    if (Platform.OS === "android") {
+      getPermissions();
+    } else {
+      setPermissionGranted(true);
+    }
+  }, []);
 
-const styles = StyleSheet.create({})
+  return (
+    <SafeAreaView>
+      {["+", "-", "/", "*"].map((item) => (
+        <View>
+          <Text>{item}</Text>
+        </View>
+      ))}
+    </SafeAreaView>
+  );
+};
+
+export default Home;
+
+const styles = StyleSheet.create({});

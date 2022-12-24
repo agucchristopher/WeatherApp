@@ -18,7 +18,7 @@ const Header = () => {
             }}>
                 <Text style={{flexDirection:'row', fontWeight:'700', fontSize: 18}}>Benin, </Text>
                 <Text style={{fontSize: 18}}>Nigeria</Text>
-                <Entypo name='chevron-down' style={{paddingTop: 3}} size={25} />
+                <Entypo name='location-pin' style={{paddingTop: 3}} size={25} />
             </View>
     </View>
   )
